@@ -1,0 +1,11 @@
+[project]
+name = "ontrack"
+version = "0.1.0"
+description = "Roller derby skater attendance tracking application"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "nicegui>=2.9.0",
+    "sqlmodel>=0.0.22",
+    "python-dateutil>=2.9.0",
+]
