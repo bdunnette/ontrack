@@ -1,0 +1,278 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.11, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\dunn0172\Documents\GitHub\ontrack\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\dunn0172\Documents\GitHub\ontrack
+configfile: pyproject.toml
+plugins: anyio-4.12.1, cov-7.0.0
+collecting ... collected 36 items
+
+tests/test_database.py::TestSkaterFunctions::test_create_skater_basic PASSED [  2%]
+tests/test_database.py::TestSkaterFunctions::test_create_skater_with_all_fields PASSED [  5%]
+tests/test_database.py::TestSkaterFunctions::test_create_coach PASSED    [  8%]
+tests/test_database.py::TestSkaterFunctions::test_get_skater PASSED      [ 11%]
+tests/test_database.py::TestSkaterFunctions::test_get_skater_nonexistent PASSED [ 13%]
+tests/test_database.py::TestSkaterFunctions::test_get_all_skaters PASSED [ 16%]
+tests/test_database.py::TestSkaterFunctions::test_get_all_skaters_active_only PASSED [ 19%]
+tests/test_database.py::TestSkaterFunctions::test_update_skater PASSED   [ 22%]
+tests/test_database.py::TestSkaterFunctions::test_delete_skater PASSED   [ 25%]
+tests/test_database.py::TestPracticeFunctions::test_create_practice_basic PASSED [ 27%]
+tests/test_database.py::TestPracticeFunctions::test_create_practice_with_details PASSED [ 30%]
+tests/test_database.py::TestPracticeFunctions::test_get_practice PASSED  [ 33%]
+tests/test_database.py::TestPracticeFunctions::test_get_all_practices PASSED [ 36%]
+tests/test_database.py::TestPracticeFunctions::test_get_all_practices_ordered PASSED [ 38%]
+tests/test_database.py::TestPracticeFunctions::test_get_all_practices_with_limit PASSED [ 41%]
+tests/test_database.py::TestPracticeFunctions::test_delete_practice PASSED [ 44%]
+tests/test_database.py::TestAttendanceFunctions::test_set_attendance_new PASSED [ 47%]
+tests/test_database.py::TestAttendanceFunctions::test_set_attendance_update PASSED [ 50%]
+tests/test_database.py::TestAttendanceFunctions::test_set_attendance_with_notes PASSED [ 52%]
+tests/test_database.py::TestAttendanceFunctions::test_get_attendance_for_practice PASSED [ 55%]
+tests/test_database.py::TestAttendanceFunctions::test_get_attendance_for_specific_skater PASSED [ 58%]
+tests/test_database.py::TestAttendanceFunctions::test_get_skater_attendance_stats PASSED [ 61%]
+tests/test_database.py::TestAttendanceFunctions::test_get_skater_attendance_stats_no_records PASSED [ 63%]
+tests/test_database.py::TestCascadeDelete::test_delete_practice_cascades_to_attendance FAILED [ 66%]
+tests/test_models.py::TestSkaterModel::test_create_basic_skater PASSED   [ 69%]
+tests/test_models.py::TestSkaterModel::test_create_skater_with_derby_name PASSED [ 72%]
+tests/test_models.py::TestSkaterModel::test_create_skater_with_guardian_info PASSED [ 75%]
+tests/test_models.py::TestSkaterModel::test_create_coach PASSED          [ 77%]
+tests/test_models.py::TestSkaterModel::test_skater_defaults PASSED       [ 80%]
+tests/test_models.py::TestPracticeModel::test_create_basic_practice PASSED [ 83%]
+tests/test_models.py::TestPracticeModel::test_create_practice_with_details PASSED [ 86%]
+tests/test_models.py::TestPracticeModel::test_practice_defaults PASSED   [ 88%]
+tests/test_models.py::TestAttendanceModel::test_create_attendance_record PASSED [ 91%]
+tests/test_models.py::TestAttendanceModel::test_attendance_default_status PASSED [ 94%]
+tests/test_models.py::TestAttendanceModel::test_attendance_with_notes PASSED [ 97%]
+tests/test_models.py::TestAttendanceModel::test_attendance_relationships PASSED [100%]
+
+================================== FAILURES ===================================
+________ TestCascadeDelete.test_delete_practice_cascades_to_attendance ________
+
+self = <sqlalchemy.engine.base.Connection object at 0x0000020A209FC710>
+dialect = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x0000020A20A38190>
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x0000020A20A6D470>
+statement = <sqlalchemy.dialects.sqlite.base.SQLiteCompiler object at 0x0000020A20A74290>
+parameters = [(None, 1)]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+
+        effective_parameters: Optional[_AnyExecuteParams]
+
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+
+        if self._echo:
+            self._log_info(str_statement)
+
+            stats = context._get_cache_stats()
+
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1967:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x0000020A20A38190>
+cursor = <sqlite3.Cursor object at 0x0000020A20A21E40>
+statement = 'UPDATE attendance SET practice_id=? WHERE attendance.id = ?'
+parameters = (None, 1)
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x0000020A20A6D470>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlite3.IntegrityError: NOT NULL constraint failed: attendance.practice_id
+
+.venv\Lib\site-packages\sqlalchemy\engine\default.py:952: IntegrityError
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.test_database.TestCascadeDelete object at 0x0000020A1F78FD90>
+session = <sqlmodel.orm.session.Session object at 0x0000020A209F9D60>
+
+    def test_delete_practice_cascades_to_attendance(self, session):
+        """Test that deleting a practice also deletes attendance records."""
+        skater = create_skater(session, name="Test Skater")
+        practice = create_practice(session, date="2026-01-25")
+        set_attendance(session, practice.id, skater.id, "present")
+
+        # Verify attendance exists
+        records = get_attendance(session, practice.id)
+        assert len(records) == 1
+
+        # Delete practice
+>       delete_practice(session, practice.id)
+
+tests\test_database.py:324:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+database.py:125: in delete_practice
+    session.commit()
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:2030: in commit
+    trans.commit(_to_root=True)
+<string>:2: in commit
+    ???
+.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py:137: in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:1311: in commit
+    self._prepare_impl()
+<string>:2: in _prepare_impl
+    ???
+.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py:137: in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:1286: in _prepare_impl
+    self.session.flush()
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4331: in flush
+    self._flush(objects)
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4466: in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py:224: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4427: in _flush
+    flush_context.execute()
+.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py:466: in execute
+    rec.execute(self)
+.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py:642: in execute
+    util.preloaded.orm_persistence.save_obj(
+.venv\Lib\site-packages\sqlalchemy\orm\persistence.py:85: in save_obj
+    _emit_update_statements(
+.venv\Lib\site-packages\sqlalchemy\orm\persistence.py:912: in _emit_update_statements
+    c = connection.execute(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1419: in execute
+    return meth(
+.venv\Lib\site-packages\sqlalchemy\sql\elements.py:527: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1641: in _execute_clauseelement
+    ret = self._execute_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1846: in _execute_context
+    return self._exec_single_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:2363: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x0000020A20A38190>
+cursor = <sqlite3.Cursor object at 0x0000020A20A21E40>
+statement = 'UPDATE attendance SET practice_id=? WHERE attendance.id = ?'
+parameters = (None, 1)
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x0000020A20A6D470>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: attendance.practice_id
+E       [SQL: UPDATE attendance SET practice_id=? WHERE attendance.id = ?]
+E       [parameters: (None, 1)]
+E       (Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+.venv\Lib\site-packages\sqlalchemy\engine\default.py:952: IntegrityError
+=========================== short test summary info ===========================
+FAILED tests/test_database.py::TestCascadeDelete::test_delete_practice_cascades_to_attendance
+======================== 1 failed, 35 passed in 0.86s =========================
