@@ -46,12 +46,12 @@ def apply_custom_styles():
             * {
                 font-family: 'Inter', sans-serif;
             }
-            
+
             body {
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 background-attachment: fixed;
             }
-            
+
             .main-container {
                 background: rgba(255, 255, 255, 0.95);
                 backdrop-filter: blur(10px);
@@ -61,7 +61,7 @@ def apply_custom_styles():
                 margin: 2rem auto;
                 max-width: 1400px;
             }
-            
+
             .stat-card {
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 border-radius: 15px;
@@ -70,25 +70,25 @@ def apply_custom_styles():
                 box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
                 transition: transform 0.3s ease, box-shadow 0.3s ease;
             }
-            
+
             .stat-card:hover {
                 transform: translateY(-5px);
                 box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
             }
-            
+
             .stat-number {
                 font-size: 2.5rem;
                 font-weight: 700;
                 margin: 0.5rem 0;
             }
-            
+
             .stat-label {
                 font-size: 0.9rem;
                 opacity: 0.9;
                 text-transform: uppercase;
                 letter-spacing: 1px;
             }
-            
+
             .page-title {
                 font-size: 2.5rem;
                 font-weight: 700;
@@ -98,14 +98,14 @@ def apply_custom_styles():
                 background-clip: text;
                 margin-bottom: 1.5rem;
             }
-            
+
             .section-title {
                 font-size: 1.5rem;
                 font-weight: 600;
                 color: #333;
                 margin: 1.5rem 0 1rem 0;
             }
-            
+
             .coach-badge {
                 background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
                 color: white;
@@ -116,12 +116,12 @@ def apply_custom_styles():
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
             }
-            
+
             .attendance-grid {
                 display: grid;
                 gap: 0.5rem;
             }
-            
+
             .attendance-row {
                 display: grid;
                 grid-template-columns: 200px 1fr;
@@ -133,54 +133,54 @@ def apply_custom_styles():
                 border: 1px solid #e0e0e0;
                 transition: all 0.2s ease;
             }
-            
+
             .attendance-row:hover {
                 border-color: #667eea;
                 box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
             }
-            
+
             .skater-name {
                 font-weight: 600;
                 color: #333;
             }
-            
+
             .derby-name {
                 font-size: 0.85rem;
                 color: #666;
                 font-style: italic;
             }
-            
+
             .q-btn {
                 text-transform: none !important;
                 font-weight: 500 !important;
                 border-radius: 8px !important;
                 transition: all 0.2s ease !important;
             }
-            
+
             .q-btn:hover {
                 transform: translateY(-2px);
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
             }
-            
+
             .q-table {
                 border-radius: 12px !important;
                 overflow: hidden;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
             }
-            
+
             .q-table thead tr {
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
             }
-            
+
             .q-table thead th {
                 color: white !important;
                 font-weight: 600 !important;
             }
-            
+
             .q-table tbody tr:hover {
                 background-color: rgba(102, 126, 234, 0.05) !important;
             }
-            
+
             .nav-button {
                 margin: 0 0.25rem;
             }

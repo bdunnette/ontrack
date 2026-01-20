@@ -24,6 +24,27 @@ A modern web application for tracking roller derby skater attendance at practice
 
 3. **Access the app**: Open your browser to `http://localhost:8080`
 
+## Development Setup
+
+To set up the development environment with code quality tools:
+
+1. **Install development dependencies**:
+   ```bash
+   uv sync --all-groups
+   ```
+
+2. **Install pre-commit hooks**:
+   ```bash
+   uv run pre-commit install
+   ```
+
+3. **Run pre-commit manually** (optional):
+   ```bash
+   uv run pre-commit run --all-files
+   ```
+
+The pre-commit hooks will automatically run on every commit to ensure code quality, formatting, and type checking.
+
 ## Usage
 
 ### Managing Skaters
